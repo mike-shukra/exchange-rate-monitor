@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,7 +54,6 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
-    @SuppressLint("ShortAlarm")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,8 +85,7 @@ class MainFragment : Fragment() {
             set(Calendar.MINUTE, 30)
         }
 
-        // setRepeating() lets you specify a precise custom interval--in this case,
-        // 20 minutes.
+        // setRepeating() lets you specify a precise custom interval--in this case
         alarmMgr?.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
@@ -94,7 +93,18 @@ class MainFragment : Fragment() {
             alarmIntent
         )
 
+        stopService()
     }
 
+    private fun startService() {
+        val input: String = "editText.text.toString()"
+        val serviceIntent = Intent(context, MyService::class.java)
+        serviceIntent.putExtra("inputExtra", input)
+        ContextCompat.startForegroundService(requireContext(), serviceIntent)
+    }
+    private fun stopService() {
+        val serviceIntent = Intent(context, MyService::class.java)
+            context?.stopService(serviceIntent)
+    }
 
 }

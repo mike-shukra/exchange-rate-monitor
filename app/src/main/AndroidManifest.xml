@@ -3,6 +3,8 @@
     package="ru.yogago.exchangeratemonitor">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="false"
@@ -26,7 +28,7 @@
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".MainActivity"
