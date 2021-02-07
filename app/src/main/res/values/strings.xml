@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Exchange Rate Monitor</string>
+    <string name="main_fragment">MainFragment</string>
+</resources>
