@@ -1,8 +1,6 @@
 package ru.yogago.exchangeratemonitor.ui.main
 
-import android.app.ActivityManager
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -82,22 +80,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
         } catch (e: Exception) {
             Log.d(LOG_TAG, "MainViewModel - getCourse - Exception: $e")
         }
-    }
-
-
-    // Custom method to determine whether a service is running
-    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
-        val context = getApplication<Application>().applicationContext
-        val activityManager = context?.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        // Loop through the running services
-        for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                // If the service is running then return true
-                return true
-            }
-        }
-        return false
     }
 
 }

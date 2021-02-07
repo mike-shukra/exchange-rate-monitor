@@ -1,21 +1,14 @@
 package ru.yogago.exchangeratemonitor.ui.main
 
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.yogago.exchangeratemonitor.MyReceiver
 import ru.yogago.exchangeratemonitor.MyService
 import ru.yogago.exchangeratemonitor.R
-import ru.yogago.exchangeratemonitor.data.AppConstants.Companion.LOG_TAG
 import java.util.*
 
 
@@ -89,7 +81,7 @@ class MainFragment : Fragment() {
         alarmMgr?.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            1000 * 60 * 1,
+            (1000 * 60 * 1 * 6),
             alarmIntent
         )
 
@@ -97,7 +89,7 @@ class MainFragment : Fragment() {
     }
 
     private fun startService() {
-        val input: String = "editText.text.toString()"
+        val input: String = ""
         val serviceIntent = Intent(context, MyService::class.java)
         serviceIntent.putExtra("inputExtra", input)
         ContextCompat.startForegroundService(requireContext(), serviceIntent)
