@@ -31,7 +31,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job
     val data: MutableLiveData<Data> = MutableLiveData()
-    val course: MutableLiveData<List<Record>> = MutableLiveData()
+    val courses: MutableLiveData<List<Record>> = MutableLiveData()
+    val myCurrentCourse: MutableLiveData<Float> = MutableLiveData()
 
     fun go(){
         val context = getApplication<Application>().applicationContext
@@ -39,22 +40,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
         launch {
             data.postValue(Data(s = "Service already running."))
             getCourse()
-
+            getCourseDaily()
         }
     }
 
-    private suspend fun getRemoteData() {
-        val request: Call<ValCurs> = ApiFactory.API.getXmlAsync()
+    private suspend fun getCourseDaily() {
+        val calendar = Calendar.getInstance()
+        val currentDate = calendar.time
+        val dateFormat: DateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val toDay: String = dateFormat.format(currentDate)
+
+        val request: Call<ValCurs> = ApiFactory.API.getCourseDailyAsync(toDay)
         try {
             val response = request.await()
+            var currentCourse: Float = 0F
             response.valute?.forEach {
-                Log.d(
-                    LOG_TAG,
-                    "MainViewModel - getRemoteData - data: ${it.name} - ${it.value} - ${it.numCode} - ${it.nominal} - ${it.charCode}"
-                )
+//                Log.d(LOG_TAG, "MainViewModel - getCourseDaily - data: ${it.name} - ${it.value} - ${it.numCode} - ${it.nominal} - ${it.charCode}")
+                if (it.charCode.equals("USD")) {
+                    currentCourse = it.value!!.replace(",",".").toFloat()
+                }
             }
+            myCurrentCourse.postValue(currentCourse)
         } catch (e: Exception) {
-            Log.d(LOG_TAG, "MainViewModel - getRemoteData - Exception: $e")
+            Log.d(LOG_TAG, "MainViewModel - getCourseDaily - Exception: $e")
         }
     }
 
@@ -70,12 +78,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
         val request: Call<CourseMount> = ApiFactory.API.getCourseMonthlyAsync(before, toDay, "R01235")
         try {
             val response = request.await()
-            course.postValue(response.valute)
-            response.valute?.forEach {
-                Log.d(LOG_TAG, "MainViewModel - getRemoteData - CourseMount: value: ${it.value}, nominal: ${it.nominal}")
-            }
+            courses.postValue(response.valute)
         } catch (e: Exception) {
-            Log.d(LOG_TAG, "MainViewModel - getRemoteData - Exception: $e")
+            Log.d(LOG_TAG, "MainViewModel - getCourse - Exception: $e")
         }
     }
 

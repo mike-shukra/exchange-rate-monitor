@@ -19,10 +19,10 @@ interface Api {
 //
     @Headers("Accept: application/vnd.yourapi.v1.full+json", "User-Agent: Your-App-Name")
     @GET("/tasks/{task_id}")
-    fun getTaskAsync(@Path("task_id") taskId: Long): Deferred<Response<Data>>
+    fun getAsync(@Path("task_id") taskId: Long): Deferred<Response<Data>>
 
-    @GET("scripts/XML_daily.asp?date_req=02/03/2002")
-    fun getXmlAsync(): Call<ValCurs>
+    @GET("scripts/XML_daily.asp")
+    fun getCourseDailyAsync(@Query("date_req") date: String): Call<ValCurs>
 
     @GET("/scripts/XML_dynamic.asp")
     fun getCourseMonthlyAsync(
