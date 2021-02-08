@@ -70,18 +70,19 @@ class MainFragment : Fragment() {
 
         viewModel.go()
 
-        // Set the alarm to start at 8:30 a.m.
+        // Set the alarm to start at 1:5 a.m.
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 8)
-            set(Calendar.MINUTE, 30)
+            set(Calendar.HOUR_OF_DAY, 1)
+            set(Calendar.MINUTE, 5)
         }
 
         // setRepeating() lets you specify a precise custom interval--in this case
+        val time: Long = (1000 * 60 * 5)
         alarmMgr?.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            (1000 * 60 * 1 * 6),
+            time,
             alarmIntent
         )
 

@@ -33,7 +33,7 @@ class MyService : Service(), CoroutineScope {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("myLog", "MyService - onCreate")
+        Log.d("myLog", "Service - onCreate")
         nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val channel = NotificationChannel(
@@ -44,8 +44,8 @@ class MyService : Service(), CoroutineScope {
         nm.createNotificationChannel(channel)
 
         myCurrentCourse.observeForever {
-            Log.d(LOG_TAG, "MyService - onStartCommand - myCurrentCourse.observeForever it: $it")
-            Log.d(LOG_TAG, "MyService - onStartCommand - myCurrentCourse.observeForever (it > MY_COURSE): ${(it > myCourse)}, myCourse: $myCourse")
+            Log.d(LOG_TAG, "Service - onStartCommand - myCurrentCourse.observeForever it: $it")
+            Log.d(LOG_TAG, "Service - onStartCommand - myCurrentCourse.observeForever (it > MY_COURSE): ${(it > myCourse)}, myCourse: $myCourse")
             if (it > myCourse) {
                 val input = "Course change up"
                 val notificationIntent = Intent(this, MainActivity::class.java)
@@ -70,7 +70,7 @@ class MyService : Service(), CoroutineScope {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("myLog", "MyService - onStartCommand")
+        Log.d(LOG_TAG, "Service - onStartCommand")
         if (intent != null) {
             launch {
                 getCourseDaily()
@@ -86,7 +86,7 @@ class MyService : Service(), CoroutineScope {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("myLog", "MyService - onDestroy")
+        Log.d("myLog", "Service - onDestroy")
 //        coroutineContext.cancelChildren()
 //        coroutineContext.cancel()
     }
@@ -108,10 +108,10 @@ class MyService : Service(), CoroutineScope {
                 }
             }
             myCurrentCourse.postValue(currentCourse)
-            Log.d(LOG_TAG, "MyService - getCourseDaily - currentCourse: $currentCourse")
+            Log.d(LOG_TAG, "Service - getCourseDaily - currentCourse: $currentCourse")
 
         } catch (e: Exception) {
-            Log.d(LOG_TAG, "MyService - getCourseDaily - Exception: $e")
+            Log.d(LOG_TAG, "Service - getCourseDaily - Exception: $e")
         }
     }
 

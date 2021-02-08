@@ -18,6 +18,7 @@ class MyReceiver : BroadcastReceiver() {
         Log.d(LOG_TAG, "MyReceiver - onReceive - action = " + intent.action);
         Log.d(LOG_TAG, "MyReceiver - onReceive - extra = " + intent.getStringExtra("extra"));
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+            Log.d("myLog", "MyReceiver - android.intent.action.BOOT_COMPLETED")
 
             val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val alarmIntent = Intent(context, MyReceiver::class.java).let { mayIntent ->
@@ -32,10 +33,11 @@ class MyReceiver : BroadcastReceiver() {
             }
 
             // setRepeating() lets you specify a precise custom interval--in this case
+            val time: Long = (1000 * 60 * 5)
             alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
-                1000 * 60 * 1,
+                time,
                 alarmIntent
             )
         }
