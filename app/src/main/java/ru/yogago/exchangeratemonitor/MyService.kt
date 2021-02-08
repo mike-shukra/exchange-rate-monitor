@@ -61,9 +61,24 @@ class MyService : Service(), CoroutineScope {
                     .build()
                 startForeground(1234, notification)
             } else {
-                nm.cancelAll()
+//                nm.cancelAll()
+//                stopForeground(true)
+//                stopSelf()
+
+                val input = "Course no change up"
+                val notificationIntent = Intent(this, MainActivity::class.java)
+                val pendingIntent = PendingIntent.getActivity(
+                    this,
+                    0, notificationIntent, 0
+                )
+                val notification: Notification = Notification.Builder(this, channelId)
+                    .setContentTitle("My Service")
+                    .setContentText(input)
+                    .setSmallIcon(R.drawable.ic_baseline_add_alert_24)
+                    .setContentIntent(pendingIntent)
+                    .build()
+                startForeground(1234, notification)
                 stopForeground(true)
-                stopSelf()
             }
         }
 

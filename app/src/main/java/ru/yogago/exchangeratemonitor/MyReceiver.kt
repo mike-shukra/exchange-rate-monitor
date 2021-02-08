@@ -33,7 +33,7 @@ class MyReceiver : BroadcastReceiver() {
             }
 
             // setRepeating() lets you specify a precise custom interval--in this case
-            val time: Long = (1000 * 60 * 5)
+            val time: Long = (1000 * 60 * 60 * 24)
             alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
