@@ -58,38 +58,9 @@ class MainFragment : Fragment() {
             recyclerView.adapter = CustomRecyclerAdapter(it)
         })
 
-        viewModel.data.observe(viewLifecycleOwner, {
-            Toast
-                .makeText(context, it.s, Toast.LENGTH_SHORT)
-                .show()
-        })
-
         viewModel.go()
 
         Alarm(requireContext()).setAlarm()
-
-
-//        nm = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        alarmIntent = Intent(context, MyReceiver::class.java).let { intent ->
-//            PendingIntent.getBroadcast(context, 0, intent, 0)
-//        }
-//
-//        // Set the alarm to start at 1:5 a.m.
-//        val calendar: Calendar = Calendar.getInstance().apply {
-//            timeInMillis = System.currentTimeMillis()
-//            set(Calendar.HOUR_OF_DAY, 1)
-//            set(Calendar.MINUTE, 5)
-//        }
-//
-//        // setRepeating() lets you specify a precise custom interval--in this case
-//        val time: Long = (1000 * 60 * 5)
-//        alarmMgr?.setRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            calendar.timeInMillis,
-//            time,
-//            alarmIntent
-//        )
 
         stopService()
     }

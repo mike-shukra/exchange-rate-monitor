@@ -15,7 +15,6 @@ import ru.yogago.exchangeratemonitor.service.MyService
 import ru.yogago.exchangeratemonitor.api.ApiFactory
 import ru.yogago.exchangeratemonitor.data.AppConstants.Companion.LOG_TAG
 import ru.yogago.exchangeratemonitor.data.CourseMount
-import ru.yogago.exchangeratemonitor.data.Data
 import ru.yogago.exchangeratemonitor.data.Record
 import ru.yogago.exchangeratemonitor.data.ValCurs
 import java.text.DateFormat
@@ -28,7 +27,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
     private val job = SupervisorJob()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job
-    val data: MutableLiveData<Data> = MutableLiveData()
     val courses: MutableLiveData<List<Record>> = MutableLiveData()
     val myCurrentCourse: MutableLiveData<Float> = MutableLiveData()
 
@@ -36,7 +34,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
         val context = getApplication<Application>().applicationContext
         context.startService(Intent(context, MyService::class.java))
         launch {
-            data.postValue(Data(s = "Service already running."))
             getCourse()
             getCourseDaily()
         }
