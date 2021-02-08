@@ -78,7 +78,7 @@ class MainFragment : Fragment() {
         }
 
         // setRepeating() lets you specify a precise custom interval--in this case
-        val time: Long = (1000 * 60 * 60 * 24)
+        val time: Long = (1000 * 60 * 5)
         alarmMgr?.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
