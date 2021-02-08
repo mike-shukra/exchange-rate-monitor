@@ -14,9 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.yogago.exchangeratemonitor.MyReceiver
-import ru.yogago.exchangeratemonitor.MyService
+import ru.yogago.exchangeratemonitor.service.MyReceiver
+import ru.yogago.exchangeratemonitor.service.MyService
 import ru.yogago.exchangeratemonitor.R
+import ru.yogago.exchangeratemonitor.service.Alarm
 import java.util.*
 
 
@@ -32,11 +33,6 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        nm = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmIntent = Intent(context, MyReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, 0, intent, 0)
-        }
     }
 
     override fun onCreateView(
@@ -70,21 +66,30 @@ class MainFragment : Fragment() {
 
         viewModel.go()
 
-        // Set the alarm to start at 1:5 a.m.
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 1)
-            set(Calendar.MINUTE, 5)
-        }
+        Alarm(requireContext()).setAlarm()
 
-        // setRepeating() lets you specify a precise custom interval--in this case
-        val time: Long = (1000 * 60 * 5)
-        alarmMgr?.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            time,
-            alarmIntent
-        )
+
+//        nm = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        alarmIntent = Intent(context, MyReceiver::class.java).let { intent ->
+//            PendingIntent.getBroadcast(context, 0, intent, 0)
+//        }
+//
+//        // Set the alarm to start at 1:5 a.m.
+//        val calendar: Calendar = Calendar.getInstance().apply {
+//            timeInMillis = System.currentTimeMillis()
+//            set(Calendar.HOUR_OF_DAY, 1)
+//            set(Calendar.MINUTE, 5)
+//        }
+//
+//        // setRepeating() lets you specify a precise custom interval--in this case
+//        val time: Long = (1000 * 60 * 5)
+//        alarmMgr?.setRepeating(
+//            AlarmManager.RTC_WAKEUP,
+//            calendar.timeInMillis,
+//            time,
+//            alarmIntent
+//        )
 
         stopService()
     }

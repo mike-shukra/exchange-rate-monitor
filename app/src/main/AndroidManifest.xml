@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true">
 
         <receiver
-            android:name=".MyReceiver"
+            android:name=".service.MyReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter >
@@ -26,7 +26,7 @@
         </receiver>
 
         <service
-            android:name=".MyService"
+            android:name=".service.MyService"
             android:enabled="true"
             android:exported="false" />
 

@@ -1,16 +1,16 @@
-package ru.yogago.exchangeratemonitor
+package ru.yogago.exchangeratemonitor.service
 
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.await
+import ru.yogago.exchangeratemonitor.MainActivity
+import ru.yogago.exchangeratemonitor.R
 import ru.yogago.exchangeratemonitor.api.ApiFactory
 import ru.yogago.exchangeratemonitor.data.AppConstants.Companion.LOG_TAG
 import ru.yogago.exchangeratemonitor.data.ValCurs

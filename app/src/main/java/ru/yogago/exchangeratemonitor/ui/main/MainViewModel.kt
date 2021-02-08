@@ -11,7 +11,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.await
-import ru.yogago.exchangeratemonitor.MyService
+import ru.yogago.exchangeratemonitor.service.MyService
 import ru.yogago.exchangeratemonitor.api.ApiFactory
 import ru.yogago.exchangeratemonitor.data.AppConstants.Companion.LOG_TAG
 import ru.yogago.exchangeratemonitor.data.CourseMount
